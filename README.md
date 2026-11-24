@@ -1,5 +1,6 @@
-# Writeups
-My Ctf Web Writeups
+GlacierCTF – Teamcheck
+Category: Web
+Vulnerability: Blind Server-Side Template Injection (SSTI)
 
 ### 1. Vulnerability Discovery
 
